@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import words from 'lodash.words'
+import Result from "./components/Result";
+import Button from "./components/Button/Button";
+import MathOperations from "./components/MathOperations";
+import './App.css'
+import Functions from "./components/Functions";
+import Numbers from "./components/Numbers";
+import { number } from "prop-types";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+
+const App = () => {
+    const [stack, setStack] = useState("")
+
+    const items = words(stack, /[^-^+^*^/]+/g)
+   
+    
+
+    const clickHandlerFunction = (text) => {
+        
+    }
+    
+    const valuee = items.length > 0 ? items[items.length-1] :"BOCA"
+    return (
+        <div className="react-calculator">
+        
+           <Result value={valuee} /> 
+
+           <Numbers
+           onClickNumber = {(numero)=> 
+           setStack(`${stack}${numero}`)}/>
+
+        
+        
+        <Functions
+        onContentClear={(clear) =>{ 
+    setStack(" ")}}
+        onDelete={(r)=>{
+            if (stack.length > 0) {
+             
+            const newStack = stack.substring(0, stack.length - 1)
+        setStack(newStack)}}}
+        />
+        <MathOperations 
+        onClickOperation={(operatione) => 
+    setStack( `${stack} ${operatione}`)}
+        onClickEqual={equal =>{ 
+            
+            setStack(eval(stack).toString())
+        }}
+        />
+        
+
+        </div>
+    )
+
 }
 
-export default App;
+export default App
